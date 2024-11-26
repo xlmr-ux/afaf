@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Africa Technologies</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #001f3f; /* Dark blue background */
+      color: white;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    canvas {
+      display: block;
+    }
+    .tagline {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="pixelCanvas"></canvas>
+  <div class="tagline">"Empowering innovation, pixel by pixel."</div>
+  <script>
+    const canvas = document.getElementById('pixelCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth * 0.9;
+    canvas.height = 200;
+
+    // Pixel art configuration
+    const pixelSize = 10;
+    const text = "AFRICA TECHNOLOGIES";
+    const startX = 50;
+    const startY = 100;
+
+    const drawPixelLetter = (x, y, char) => {
+      const fontMap = {
+        'A': [
+          "  111  ",
+          " 1   1 ",
+          "1     1",
+          "1111111",
+          "1     1",
+          "1     1"
+        ],
+        // Add other letters here (use similar grid patterns)
+        ' ': [
+          "       ",
+          "       ",
+          "       ",
+          "       ",
+          "       ",
+          "       "
+        ]
+      };
+
+      const pattern = fontMap[char.toUpperCase()] || fontMap[' '];
+      pattern.forEach((row, rowIndex) => {
+        row.split('').forEach((cell, colIndex) => {
+          if (cell === '1') {
+            ctx.fillStyle = '#FFD700'; // Golden color for the letters
+            ctx.fillRect(x + colIndex * pixelSize, y + rowIndex * pixelSize, pixelSize, pixelSize);
+          }
+        });
+      });
+    };
+
+    const drawText = (text, startX, startY) => {
+      let x = startX;
+      const spaceBetweenLetters = pixelSize * 8;
+
+      for (let char of text) {
+        drawPixelLetter(x, startY, char);
+        x += spaceBetweenLetters;
+      }
+    };
+
+    drawText(text, startX, startY);
+  </script>
+</body>
+</html>
